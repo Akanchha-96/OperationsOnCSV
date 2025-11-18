@@ -79,3 +79,33 @@ with open('brand_average_prices.csv', 'w') as f:
     csvFileWriter.writerow(['Brand', 'Average Price'])
     for data in newdata:
         csvFileWriter.writerow([data['Brand'], data['AveragePrice']])
+
+#To calculate highest inventory
+brand_inventory_value = {}
+
+for product in Products:
+    brand = product['brand']
+    price = float(product['price'])
+    stock = int(product['stock'])
+    total_value = price * stock
+
+    if brand in brand_inventory_value:
+        brand_inventory_value[brand] += total_value
+    else:
+        brand_inventory_value[brand] = total_value
+
+highest_value = 0
+highest_brand = ''
+
+for brand, value in brand_inventory_value.items():
+    if value > highest_value:
+        highest_value = value
+        highest_brand = brand
+
+print(f"Brand with the largest total inventory value: {highest_brand} {highest_value}")
+
+with open('brand_inventory_values.csv', 'w') as f:
+    csvFileWriter = csv.writer(f)
+    csvFileWriter.writerow(['Brand', 'Total Inventory Value'])
+    for brand, value in brand_inventory_value.items():
+        csvFileWriter.writerow([brand, value])
