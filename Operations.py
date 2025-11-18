@@ -218,3 +218,19 @@ for product in Products:
     elif product['description'] =="" or product['description']==" ":
         count_rowdes+=1
 print(f"we have {count_rowname} missing rows for names and {count_rowdes} missing rows for description")
+
+# To check how many products have missing or duplicate EAN value
+
+EANCount=0
+EANCount=Counter(product['ean'] for product in Products)
+print("Number of products as per EAN:")
+with open('EANwise_Productcount.csv', mode ='w')as file:
+    csvFileWriter = csv.writer(file)
+    csvFileWriter.writerow(['EAN', 'Total'])
+    for b, count in EANCount.items():
+        print(f"{b}: {count}")
+        csvFileWriter.writerow([b,count])
+        if count > 1:
+            print(f"{b} has {count} duplicate entry.")
+        elif count == 0:
+            print(f"{b} has no entry for EAN.")
