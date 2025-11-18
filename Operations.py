@@ -251,3 +251,18 @@ with open('Id_wise_Productcount.csv', mode ='w')as file:
             print(f"{b} has {count} duplicate entry.")
         elif count == 0:
             print(f"{b} has no entry for id.")
+
+# To check which products has lowest price value
+
+lowest_price_product = []
+
+for product in Products:
+    name = product['name']
+    price = float(product['price'])
+    if price <= 50:
+        lowest_price_product.append({'Name': name, 'Price': price})
+with open('Lowest_price_Product.csv', 'w') as f:
+    csvFileWriter = csv.writer(f)
+    csvFileWriter.writerow(['Name', 'Price'])
+    for data in lowest_price_product:
+        csvFileWriter.writerow([data['Name'], data['Price']])
