@@ -158,3 +158,38 @@ for category, count in ccat.items():
         max_cnt=count
         max_cat+=" "+category
 print(f"category with highest products: {max_cat} ({max_cnt} products)")
+
+#To calculate average price per category
+cat_total_price = {}   
+cat_count = {} 
+
+for product in Products:
+    category = product['category']
+    price = float(product['price'])
+    if category in cat_total_price:
+        cat_total_price[category] += price
+        cat_count[category] += 1
+    else:
+        cat_total_price[category] = price
+        cat_count[category] = 1
+
+highest_avg = 0
+highest_category = ''
+
+newcatdata = []
+
+for category in cat_total_price:
+    avg_price = cat_total_price[category] / cat_count[category]
+    newcatdata.append({'Category': category, 'AveragePrice': avg_price})
+    if avg_price > highest_avg:
+        highest_avg = avg_price
+        highest_category = category
+
+print(f"Category with highest average price: {highest_category} ({highest_avg})")
+
+
+with open('category_average_prices.csv', 'w') as f:
+    csvFileWriter = csv.writer(f)
+    csvFileWriter.writerow(['Category', 'Average Price'])
+    for data in newcatdata:
+        csvFileWriter.writerow([data['Category'], data['AveragePrice']])
