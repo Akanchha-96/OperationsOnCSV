@@ -193,3 +193,17 @@ with open('category_average_prices.csv', 'w') as f:
     csvFileWriter.writerow(['Category', 'Average Price'])
     for data in newcatdata:
         csvFileWriter.writerow([data['Category'], data['AveragePrice']])
+
+# To count the number of products are in_stock and out_of_stock
+
+count_in=0
+count_out=0
+
+for product in Products:
+    if product['availability']=='in_stock':
+        count_in+=1
+    elif product['availability']=='out_of_stock':
+        count_out+=1
+    else:
+        pass
+print(f"we have total {count_in} in_stock products and {count_out} out of stock products")
