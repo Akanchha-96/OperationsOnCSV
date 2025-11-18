@@ -135,3 +135,26 @@ with open('Top 10 brand_inventory_values.csv', 'w') as f:
     for brand, value in top_10:
         csvFileWriter.writerow([brand, value])
         print(f"{brand}: {value}")
+
+#To calulate Categorywise product count
+ccat=0
+ccat=Counter(product['category'] for product in Products)
+print("Number of products as per category:")
+with open('Categorywise_Productcount.csv', mode ='w')as file:
+    csvFileWriter = csv.writer(file)
+    csvFileWriter.writerow(['Category', 'Total'])
+    for c, count in ccat.items():
+        print(f"{c}: {count}")
+        csvFileWriter.writerow([c,count])
+
+max_cat = ""
+max_cnt = 0
+
+for category, count in ccat.items():
+    if count > max_cnt:
+        max_cnt = count
+        max_cat = category
+    if count == max_cnt:
+        max_cnt=count
+        max_cat+=" "+category
+print(f"category with highest products: {max_cat} ({max_cnt} products)")
