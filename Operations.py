@@ -44,3 +44,38 @@ for brand, count in cc.items():
         max_count = count
         max_brand = brand
 print(f"Brand with highest products: {max_brand} ({max_count} products)")
+
+#To calculate average price per brand
+brand_total_price = {}   
+brand_count = {} 
+
+for product in Products:
+    brand = product['brand']
+    price = float(product['price'])
+    if brand in brand_total_price:
+        brand_total_price[brand] += price
+        brand_count[brand] += 1
+    else:
+        brand_total_price[brand] = price
+        brand_count[brand] = 1
+
+highest_avg = 0
+highest_brand = ''
+
+newdata = []
+
+for brand in brand_total_price:
+    avg_price = brand_total_price[brand] / brand_count[brand]
+    newdata.append({'Brand': brand, 'AveragePrice': avg_price})
+    if avg_price > highest_avg:
+        highest_avg = avg_price
+        highest_brand = brand
+
+print(f"Brand with highest average price: {highest_brand} ({highest_avg})")
+
+
+with open('brand_average_prices.csv', 'w') as f:
+    csvFileWriter = csv.writer(f)
+    csvFileWriter.writerow(['Brand', 'Average Price'])
+    for data in newdata:
+        csvFileWriter.writerow([data['Brand'], data['AveragePrice']])
