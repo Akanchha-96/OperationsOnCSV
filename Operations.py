@@ -266,3 +266,40 @@ with open('Lowest_price_Product.csv', 'w') as f:
     csvFileWriter.writerow(['Name', 'Price'])
     for data in lowest_price_product:
         csvFileWriter.writerow([data['Name'], data['Price']])
+
+# To find top 5 most expensive product, grouped by brand
+
+brand_products={}
+for product in Products:
+    brand=product['brand']
+    price=product['price']
+
+    if brand in brand_products:
+            brand_products[brand].append(product)
+    else:
+            brand_products[brand]=[product]
+
+tempcopy = brand_products.copy()
+top_5 = []
+
+for x in range(5):
+    if not tempcopy:
+        break
+    
+    highest_brand = ""
+    highest_value = -1
+    for brand, value in tempcopy.items():
+        max_price = max(float(product['price']) for product in value)
+        if max_price > highest_value:
+            highest_value = max_price
+            highest_brand = brand
+    top_5.append((highest_brand, highest_value))
+    del tempcopy[highest_brand]
+
+print("\nTop 5 most highest price grouped by brand:")
+with open('Top 5 highest_Brand_values.csv', 'w') as f:
+    csvFileWriter = csv.writer(f)
+    csvFileWriter.writerow(['Brand', 'Price'])
+    for brand, value in top_5:
+        csvFileWriter.writerow([brand, value])
+        #print(f"{brand}: {value}")
