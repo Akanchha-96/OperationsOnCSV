@@ -109,3 +109,29 @@ with open('brand_inventory_values.csv', 'w') as f:
     csvFileWriter.writerow(['Brand', 'Total Inventory Value'])
     for brand, value in brand_inventory_value.items():
         csvFileWriter.writerow([brand, value])
+
+#To calculate top 10 highest inventory values
+
+tempcopy = brand_inventory_value.copy()
+top_10 = []
+
+for x in range(10):
+    if not tempcopy:
+        break
+    
+    highest_brand = ""
+    highest_value = -1
+    for brand, value in tempcopy.items():
+        if value > highest_value:
+            highest_value = value
+            highest_brand = brand
+    top_10.append((highest_brand, highest_value))
+    del tempcopy[highest_brand]
+
+print("\nTop 10 brands by inventory value:")
+with open('Top 10 brand_inventory_values.csv', 'w') as f:
+    csvFileWriter = csv.writer(f)
+    csvFileWriter.writerow(['Brand', 'Total Inventory Value'])
+    for brand, value in top_10:
+        csvFileWriter.writerow([brand, value])
+        print(f"{brand}: {value}")
