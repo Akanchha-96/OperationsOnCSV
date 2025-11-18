@@ -234,3 +234,20 @@ with open('EANwise_Productcount.csv', mode ='w')as file:
             print(f"{b} has {count} duplicate entry.")
         elif count == 0:
             print(f"{b} has no entry for EAN.")
+
+# To check if there are any duplicate internal IDs          
+
+IdCount=0
+IdCount=Counter(product['' \
+'id'] for product in Products)
+print("Number of entries for Internal id:")
+with open('Id_wise_Productcount.csv', mode ='w')as file:
+    csvFileWriter = csv.writer(file)
+    csvFileWriter.writerow(['Internal ID', 'Total'])
+    for b, count in IdCount.items():
+        print(f"{b}: {count}")
+        csvFileWriter.writerow([b,count])
+        if count > 1:
+            print(f"{b} has {count} duplicate entry.")
+        elif count == 0:
+            print(f"{b} has no entry for id.")
