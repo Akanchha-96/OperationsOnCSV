@@ -207,3 +207,14 @@ for product in Products:
     else:
         pass
 print(f"we have total {count_in} in_stock products and {count_out} out of stock products")
+
+#To check if we have any rows with missing description or name
+
+count_rowname=0
+count_rowdes=0
+for product in Products:
+    if product['name'] =="" or product['name']==" ":
+       count_rowname+=1
+    elif product['description'] =="" or product['description']==" ":
+        count_rowdes+=1
+print(f"we have {count_rowname} missing rows for names and {count_rowdes} missing rows for description")
